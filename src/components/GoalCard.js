@@ -1,94 +1,145 @@
 import React from "react";
+import { useSavings } from "../context/SavingsContext";
 
-const GoalCard = ({ goal, onDelete, onUse }) => {
-  const target = Number(goal.targetAmount) || 0;
-  const saved = Number(goal.savedAmount) || 0;
+const GoalCard = ({ goal }) => {
+  const { savings, deleteGoal } = useSavings();
 
+  // Get all savings belonging to this goal
+  const goalSavings = savings.filter(
+    (saving) => String(saving.goalId) === String(goal.id)
+  );
+
+  // Calculate total saved for this particular goal
+  const savedAmount = goalSavings.reduce(
+    (total, saving) =>
+      total + Number(saving.amount || 0),
+    0
+  );
+
+  const targetAmount = Number(
+    goal.targetAmount || 0
+  );
+
+  // Calculate progress percentage
   const progress =
-    target > 0
-      ? Math.min((saved / target) * 100, 100)
+    targetAmount > 0
+      ? Math.min(
+          Math.round(
+            (savedAmount / targetAmount) * 100
+          ),
+          100
+        )
       : 0;
 
-  const remaining = Math.max(target - saved, 0);
+  // Calculate remaining amount
+  const remaining = Math.max(
+    targetAmount - savedAmount,
+    0
+  );
 
   return (
     <div className="goal-card">
+
+      {/* TOP SECTION */}
       <div className="goal-card-top">
-        <span className="goal-label">
-          SAVINGS GOAL
-        </span>
 
-        <span className="goal-percentage">
-          {Math.round(progress)}%
-        </span>
-      </div>
-
-      <div className="goal-icon">
-        🎯
-      </div>
-
-      <h3>{goal.name}</h3>
-
-      <div className="goal-amount-row">
         <div>
-          <span className="goal-small-label">
-            SAVED
+          <span className="goal-label">
+            SAVINGS GOAL
           </span>
 
-          <strong>
-            ₹{saved.toLocaleString("en-IN")}
-          </strong>
+          <div className="goal-icon">
+            🎯
+          </div>
+
+          <h3>{goal.name}</h3>
         </div>
 
-        <div className="goal-target">
-          <span className="goal-small-label">
-            TARGET
-          </span>
-
-          <strong>
-            ₹{target.toLocaleString("en-IN")}
-          </strong>
+        <div className="goal-percentage">
+          {progress}%
         </div>
+
       </div>
 
+      {/* MONEY DETAILS */}
+      <div className="goal-money-grid">
+
+        <div className="goal-money-box">
+          <span>SAVED</span>
+
+          <strong>
+            ₹
+            {savedAmount.toLocaleString(
+              "en-IN"
+            )}
+          </strong>
+        </div>
+
+        <div className="goal-money-box">
+          <span>TARGET</span>
+
+          <strong>
+            ₹
+            {targetAmount.toLocaleString(
+              "en-IN"
+            )}
+          </strong>
+        </div>
+
+      </div>
+
+      {/* PROGRESS BAR */}
       <div className="goal-progress-container">
-        <div className="goal-progress-track">
+
+        <div className="goal-progress-bar">
           <div
             className="goal-progress-fill"
             style={{
-              width: `${progress}%`
+              width: `${progress}%`,
             }}
-          />
+          ></div>
         </div>
+
+        <div className="goal-progress-info">
+
+          <span>
+            {progress}% completed
+          </span>
+
+          <span>
+            ₹
+            {remaining.toLocaleString(
+              "en-IN"
+            )}{" "}
+            left
+          </span>
+
+        </div>
+
       </div>
 
-      <div className="goal-progress-info">
-        <span>
-          {Math.round(progress)}% completed
-        </span>
+      {/* ACTIONS */}
+      <div className="goal-actions">
 
-        <span>
-          ₹{remaining.toLocaleString("en-IN")} left
-        </span>
-      </div>
-
-      <div className="goal-card-footer">
         <button
-          className="goal-use-btn"
-          onClick={() => onUse(goal)}
+          type="button"
+          className="use-goal-button"
         >
           Use This Goal
           <span>→</span>
         </button>
 
         <button
-          className="goal-delete-btn"
-          onClick={() => onDelete(goal.id)}
+          type="button"
+          className="delete-goal-button"
+          onClick={() => deleteGoal(goal.id)}
           title="Delete goal"
         >
           🗑
         </button>
+
       </div>
+
     </div>
   );
 };

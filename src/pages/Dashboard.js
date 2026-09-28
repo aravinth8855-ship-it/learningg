@@ -1,5 +1,4 @@
 import React from "react";
-
 import { useSavings } from "../context/SavingsContext";
 
 import SummaryCards from "../components/SummaryCards";
@@ -16,6 +15,10 @@ const Dashboard = () => {
     expenses,
     savings,
   } = useSavings();
+
+  /* =========================
+     FINANCIAL CALCULATIONS
+  ========================= */
 
   const totalSaved = savings.reduce(
     (total, saving) =>
@@ -35,8 +38,10 @@ const Dashboard = () => {
     0
   );
 
-  const remaining =
-    Math.max(totalTarget - totalSaved, 0);
+  const remaining = Math.max(
+    totalTarget - totalSaved,
+    0
+  );
 
   const progress =
     totalTarget > 0
@@ -48,6 +53,10 @@ const Dashboard = () => {
         )
       : 0;
 
+  /* =========================
+     RECENT EXPENSES
+  ========================= */
+
   const recentExpenses = [...expenses]
     .sort(
       (a, b) =>
@@ -56,10 +65,34 @@ const Dashboard = () => {
     )
     .slice(0, 3);
 
+  /* =========================
+     SCROLL FUNCTIONS
+  ========================= */
+
+  const scrollToActions = () => {
+    document
+      .getElementById("money-actions")
+      ?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+  };
+
+  const scrollToGoals = () => {
+    document
+      .getElementById("financial-goals")
+      ?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+  };
+
   return (
     <div className="advanced-dashboard">
 
-      {/* HERO */}
+      {/* =====================================================
+          HERO SECTION
+      ===================================================== */}
 
       <section className="dashboard-hero">
 
@@ -75,68 +108,93 @@ const Dashboard = () => {
           </h1>
 
           <p>
-            Track spending, build savings and
-            stay focused on the goals that matter.
+            Track spending, build savings and stay
+            focused on the goals that matter.
           </p>
 
           <div className="hero-actions">
+
             <button
+              type="button"
               className="hero-primary"
-              onClick={() =>
-                document
-                  .getElementById("money-actions")
-                  ?.scrollIntoView({
-                    behavior: "smooth",
-                  })
-              }
+              onClick={scrollToActions}
             >
-              Start tracking
-              <span>→</span>
+              <span>Start tracking</span>
+              <span className="hero-arrow">→</span>
             </button>
 
             <button
+              type="button"
               className="hero-secondary"
-              onClick={() =>
-                document
-                  .getElementById("financial-goals")
-                  ?.scrollIntoView({
-                    behavior: "smooth",
-                  })
-              }
+              onClick={scrollToGoals}
             >
               View goals
             </button>
+
           </div>
 
         </div>
 
+        {/* HERO PROGRESS AREA */}
+
         <div className="hero-orbit">
 
-          <div className="orbit-ring"></div>
+          <div className="orbit-ring orbit-ring-one"></div>
+
+          <div className="orbit-ring orbit-ring-two"></div>
 
           <div className="hero-money-card">
 
-            <span>Current progress</span>
+            <div className="progress-card-header">
+              <span>Current progress</span>
 
-            <strong>
+              <span className="progress-status">
+                {progress >= 100
+                  ? "Complete"
+                  : "In progress"}
+              </span>
+            </div>
+
+            <strong className="hero-progress-value">
               {progress}%
             </strong>
 
             <div className="hero-progress">
+
               <div
+                className="hero-progress-fill"
                 style={{
                   width: `${progress}%`,
                 }}
               ></div>
+
             </div>
 
-            <small>
-              ₹
-              {totalSaved.toLocaleString(
-                "en-IN"
-              )}{" "}
-              saved
-            </small>
+            <div className="hero-money-details">
+
+              <div>
+                <small>Saved</small>
+
+                <strong>
+                  ₹
+                  {totalSaved.toLocaleString(
+                    "en-IN"
+                  )}
+                </strong>
+              </div>
+
+              <div>
+                <small>Target</small>
+
+                <strong>
+                  ₹
+                  {totalTarget.toLocaleString(
+                    "en-IN"
+                  )}
+                </strong>
+              </div>
+
+            </div>
 
           </div>
 
@@ -144,20 +202,32 @@ const Dashboard = () => {
 
       </section>
 
-      {/* QUICK STATS */}
+      {/* =====================================================
+          OVERVIEW
+      ===================================================== */}
 
       <section className="dashboard-section">
 
         <div className="section-heading">
+
           <div>
+
             <span>OVERVIEW</span>
-            <h2>Your financial pulse</h2>
+
+            <h2>
+              Your financial pulse
+            </h2>
+
           </div>
 
           <div className="live-indicator">
+
             <i></i>
+
             Live data
+
           </div>
+
         </div>
 
         <SummaryCards
@@ -168,7 +238,9 @@ const Dashboard = () => {
 
       </section>
 
-      {/* GOALS */}
+      {/* =====================================================
+          FINANCIAL GOALS
+      ===================================================== */}
 
       <section
         id="financial-goals"
@@ -178,12 +250,18 @@ const Dashboard = () => {
         <div className="section-heading">
 
           <div>
+
             <span>YOUR TARGETS</span>
-            <h2>Financial goals</h2>
+
+            <h2>
+              Financial goals
+            </h2>
+
             <p>
               Every goal gets you closer to where
               you want to be.
             </p>
+
           </div>
 
         </div>
@@ -191,6 +269,7 @@ const Dashboard = () => {
         {goals.length === 0 ? (
 
           <div className="premium-empty">
+
             <div className="empty-icon">
               🎯
             </div>
@@ -209,19 +288,25 @@ const Dashboard = () => {
         ) : (
 
           <div className="goals-grid">
+
             {goals.map((goal) => (
+
               <GoalCard
                 key={goal.id}
                 goal={goal}
               />
+
             ))}
+
           </div>
 
         )}
 
       </section>
 
-      {/* MONEY ACTIONS */}
+      {/* =====================================================
+          MONEY ACTIONS
+      ===================================================== */}
 
       <section
         id="money-actions"
@@ -231,32 +316,48 @@ const Dashboard = () => {
         <div className="section-heading">
 
           <div>
+
             <span>MONEY ACTIONS</span>
-            <h2>Move your money</h2>
+
+            <h2>
+              Move your money
+            </h2>
+
             <p>
               Record savings and expenses in
               seconds.
             </p>
+
           </div>
 
         </div>
 
         <div className="forms-grid">
+
           <ExpenseForm />
+
           <SavingsForm />
+
         </div>
 
       </section>
 
-      {/* ACTIVITY */}
+      {/* =====================================================
+          RECENT FINANCIAL ACTIVITY
+      ===================================================== */}
 
       <section className="dashboard-section">
 
         <div className="section-heading">
 
           <div>
+
             <span>ACTIVITY</span>
-            <h2>Recent financial activity</h2>
+
+            <h2>
+              Recent financial activity
+            </h2>
+
           </div>
 
         </div>
@@ -264,26 +365,37 @@ const Dashboard = () => {
         <div className="activity-layout">
 
           <div className="activity-main">
+
             <ExpenseHistory />
+
           </div>
 
           <div className="activity-side">
+
             <SavingsHistory />
+
           </div>
 
         </div>
 
       </section>
 
-      {/* RECENT */}
+      {/* =====================================================
+          RECENT EXPENSES
+      ===================================================== */}
 
       <section className="dashboard-section">
 
         <div className="section-heading">
 
           <div>
+
             <span>QUICK VIEW</span>
-            <h2>Latest expenses</h2>
+
+            <h2>
+              Latest expenses
+            </h2>
+
           </div>
 
         </div>
@@ -293,16 +405,20 @@ const Dashboard = () => {
           {recentExpenses.length === 0 ? (
 
             <div className="premium-empty">
+
               <div className="empty-icon">
                 ✨
               </div>
 
-              <h3>No expenses yet</h3>
+              <h3>
+                No expenses yet
+              </h3>
 
               <p>
                 Your recent spending will appear
                 here.
               </p>
+
             </div>
 
           ) : (
@@ -315,6 +431,7 @@ const Dashboard = () => {
                 "Expense";
 
               return (
+
                 <div
                   className="recent-expense"
                   key={expense.id}
@@ -325,7 +442,10 @@ const Dashboard = () => {
                   </div>
 
                   <div className="recent-expense-info">
-                    <strong>{name}</strong>
+
+                    <strong>
+                      {name}
+                    </strong>
 
                     <span>
                       {expense.category ||
@@ -333,18 +453,22 @@ const Dashboard = () => {
                       •{" "}
                       {expense.date}
                     </span>
+
                   </div>
 
                   <strong className="recent-expense-amount">
+
                     −₹
                     {Number(
                       expense.amount || 0
                     ).toLocaleString(
                       "en-IN"
                     )}
+
                   </strong>
 
                 </div>
+
               );
             })
 
@@ -354,19 +478,27 @@ const Dashboard = () => {
 
       </section>
 
-      {/* ANALYTICS */}
+      {/* =====================================================
+          ANALYTICS
+      ===================================================== */}
 
       <section className="dashboard-section">
 
         <div className="section-heading">
 
           <div>
+
             <span>ANALYTICS</span>
-            <h2>Spending intelligence</h2>
+
+            <h2>
+              Spending intelligence
+            </h2>
+
             <p>
               Understand where your money is
               going.
             </p>
+
           </div>
 
         </div>
@@ -375,7 +507,9 @@ const Dashboard = () => {
 
       </section>
 
-      {/* BOTTOM INSIGHT */}
+      {/* =====================================================
+          FINANCIAL SNAPSHOT
+      ===================================================== */}
 
       <section className="insight-banner">
 
@@ -384,20 +518,26 @@ const Dashboard = () => {
         </div>
 
         <div>
-          <span>FINANCIAL SNAPSHOT</span>
+
+          <span>
+            FINANCIAL SNAPSHOT
+          </span>
 
           <h3>
+
             ₹
             {remaining.toLocaleString(
               "en-IN"
             )}{" "}
             remaining towards your targets
+
           </h3>
 
           <p>
             Keep recording your savings to
             maintain your progress.
           </p>
+
         </div>
 
       </section>
