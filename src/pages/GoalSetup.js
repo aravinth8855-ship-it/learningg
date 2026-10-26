@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useSavings } from "../context/SavingsContext";
 
 const GoalSetup = ({ setPage }) => {
-  const { addGoal, goals, deleteGoal, savings, setActiveGoalId } = useSavings();
+  const { addGoal, goals, deleteGoal, setActiveGoalId } = useSavings();
 
   const handleUseGoal = (goalId) => {
     setActiveGoalId(String(goalId));
