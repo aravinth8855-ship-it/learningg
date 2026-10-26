@@ -9,14 +9,22 @@ const SavingsHistory = () => {
   } = useSavings();
 
   const getGoalName = (goalId) => {
+    // IDs are generated as strings (for example, "timestamp-random").
+    // Comparing them with Number() turns both into NaN, so valid goals
+    // were incorrectly displayed as "Unknown Goal".
     const goal = goals.find(
-      (item) =>
-        Number(item.id) === Number(goalId)
+      (item) => String(item.id) === String(goalId)
     );
 
-    return goal
-      ? goal.name
-      : "Unknown Goal";
+    // Keep compatibility with older records that may already contain
+    // the goal name even if their original goal ID is no longer available.
+    if (goal) return goal.name;
+
+    const matchingSaving = savings.find(
+      (saving) => String(saving.goalId) === String(goalId)
+    );
+
+    return matchingSaving?.goalName || "Goal unavailable";
   };
 
   return (

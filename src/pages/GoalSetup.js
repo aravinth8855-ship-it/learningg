@@ -1,8 +1,19 @@
 import React, { useState } from "react";
 import { useSavings } from "../context/SavingsContext";
 
-const GoalSetup = () => {
-  const { addGoal, goals, deleteGoal } = useSavings();
+const GoalSetup = ({ setPage }) => {
+  const { addGoal, goals, deleteGoal, savings, setActiveGoalId } = useSavings();
+
+  const handleUseGoal = (goalId) => {
+    setActiveGoalId(String(goalId));
+    setPage("dashboard");
+    window.setTimeout(() => {
+      document.getElementById("savings-form")?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    }, 120);
+  };
 
   const [goalName, setGoalName] = useState("");
   const [targetAmount, setTargetAmount] = useState("");
@@ -207,6 +218,7 @@ const GoalSetup = () => {
                 <button
                   className="use-goal-button"
                   type="button"
+                  onClick={() => handleUseGoal(goal.id)}
                 >
                   Use This Goal
                   <span>→</span>

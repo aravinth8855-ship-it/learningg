@@ -24,7 +24,7 @@ const App = () => {
         )}
 
         {page === "goals" && (
-          <GoalSetup />
+          <GoalSetup setPage={setPage} />
         )}
 
       </main>

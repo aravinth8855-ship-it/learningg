@@ -1,8 +1,19 @@
 import React from "react";
 import { useSavings } from "../context/SavingsContext";
 
-const GoalCard = ({ goal }) => {
-  const { savings, deleteGoal } = useSavings();
+const GoalCard = ({ goal, setPage }) => {
+  const { savings, deleteGoal, setActiveGoalId } = useSavings();
+
+  const handleUseGoal = () => {
+    setActiveGoalId(String(goal.id));
+    setPage("dashboard");
+    window.setTimeout(() => {
+      document.getElementById("savings-form")?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    }, 120);
+  };
 
   // Get all savings belonging to this goal
   const goalSavings = savings.filter(
@@ -124,6 +135,7 @@ const GoalCard = ({ goal }) => {
         <button
           type="button"
           className="use-goal-button"
+          onClick={handleUseGoal}
         >
           Use This Goal
           <span>→</span>

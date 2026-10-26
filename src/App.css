@@ -5001,3 +5001,494 @@ button {
   }
 }
 
+
+/* =========================================================
+   MONEYFLOW UI POLISH — compact typography and activity layout
+   Existing functionality and colour theme are preserved.
+========================================================= */
+
+/* Keep typography more balanced across the dashboard */
+.page-container,
+.advanced-dashboard {
+  width: min(94%, 1380px);
+  padding-top: 30px;
+  padding-bottom: 64px;
+}
+
+.section-heading h2 {
+  font-size: clamp(24px, 2.2vw, 32px);
+  line-height: 1.2;
+  letter-spacing: -0.7px;
+}
+
+.section-heading p {
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.section-heading > div > span,
+.section-heading .eyebrow,
+.eyebrow {
+  font-size: 11px;
+  letter-spacing: 2px;
+}
+
+.dashboard-section {
+  margin-top: 34px;
+}
+
+.dashboard-hero {
+  min-height: 350px;
+  padding: clamp(34px, 4vw, 58px);
+  border-radius: 30px;
+}
+
+.dashboard-hero .hero-content h1 {
+  font-size: clamp(42px, 4.7vw, 66px);
+  line-height: 1.04;
+  letter-spacing: -2px;
+}
+
+.dashboard-hero .hero-content p {
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+.hero-progress-value {
+  font-size: 42px;
+}
+
+.hero-money-details strong {
+  font-size: clamp(25px, 2.5vw, 36px);
+}
+
+/* Financial activity: balanced two-column layout */
+.activity-layout {
+  grid-template-columns: minmax(0, 1.45fr) minmax(300px, 0.9fr);
+  align-items: start;
+  gap: 22px;
+}
+
+.activity-main,
+.activity-side {
+  min-width: 0;
+}
+
+.history-card,
+.chart-card {
+  padding: 24px;
+  border-radius: 22px;
+}
+
+.history-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.history-header h2 {
+  font-size: 21px;
+  line-height: 1.25;
+  letter-spacing: -0.35px;
+}
+
+.history-header p {
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.history-count {
+  flex-shrink: 0;
+  font-size: 14px;
+  text-align: right;
+}
+
+.history-count span {
+  display: block;
+  color: #64748b;
+  font-size: 11px;
+}
+
+.history-controls,
+.history-filters {
+  grid-template-columns: minmax(0, 1fr) minmax(130px, 180px);
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.history-controls input,
+.history-controls select,
+.history-filters input,
+.history-filters select {
+  min-height: 44px;
+  padding: 0 12px;
+  border-radius: 12px;
+  font-size: 14px;
+}
+
+.history-item {
+  padding: 13px;
+  border-radius: 15px;
+  gap: 12px;
+}
+
+.history-icon,
+.history-symbol {
+  width: 42px;
+  height: 42px;
+  border-radius: 13px;
+  font-size: 18px;
+}
+
+.history-left {
+  min-width: 0;
+  gap: 11px;
+}
+
+.history-details h3 {
+  font-size: 14px;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.history-details p {
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.history-right {
+  flex-shrink: 0;
+  gap: 10px;
+}
+
+.expense-amount,
+.saving-amount {
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.delete-button,
+.edit-button {
+  padding: 7px 9px;
+  font-size: 12px;
+}
+
+.empty-history,
+.empty-state {
+  padding: 24px 8px;
+}
+
+.empty-history h3,
+.empty-state h3 {
+  font-size: 16px;
+}
+
+.empty-history p,
+.empty-state p {
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* Goal cards: keep money labels and amounts aligned */
+.goal-card {
+  padding: 25px;
+  border-radius: 22px;
+}
+
+.goal-card h3 {
+  font-size: 20px;
+}
+
+.goal-money-grid {
+  gap: 12px;
+}
+
+.goal-money-box {
+  padding: 14px;
+}
+
+.goal-money-box span {
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+
+.goal-money-box strong {
+  font-size: 18px;
+}
+
+@media (max-width: 1050px) {
+  .activity-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .activity-side .history-card {
+    min-height: auto;
+  }
+}
+
+@media (max-width: 700px) {
+  .page-container,
+  .advanced-dashboard {
+    width: min(92%, 1380px);
+    padding-top: 22px;
+    padding-bottom: 42px;
+  }
+
+  .dashboard-section {
+    margin-top: 26px;
+  }
+
+  .section-heading h2 {
+    font-size: 24px;
+  }
+
+  .dashboard-hero {
+    padding: 28px 24px;
+    border-radius: 23px;
+  }
+
+  .dashboard-hero .hero-content h1 {
+    font-size: clamp(36px, 9vw, 48px);
+    letter-spacing: -1.3px;
+  }
+
+  .dashboard-hero .hero-content p {
+    font-size: 15px;
+  }
+
+  .history-card,
+  .chart-card {
+    padding: 18px;
+    border-radius: 18px;
+  }
+
+  .history-header h2 {
+    font-size: 19px;
+  }
+
+  .history-controls,
+  .history-filters {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .history-item {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .history-right {
+    width: 100%;
+    justify-content: space-between;
+    padding-left: 53px;
+  }
+}
+
+@media (max-width: 420px) {
+  .history-header {
+    flex-direction: column;
+  }
+
+  .history-count {
+    text-align: left;
+  }
+
+  .history-right {
+    padding-left: 0;
+  }
+}
+
+
+/* Graph-style financial analytics */
+.finance-graphs-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+  align-items: stretch;
+}
+
+.graph-card {
+  min-width: 0;
+  overflow: hidden;
+}
+
+.graph-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.graph-eyebrow {
+  display: block;
+  margin-bottom: 7px;
+  color: #6557ef;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+
+.graph-heading h2 {
+  margin: 0 0 6px;
+  font-size: clamp(18px, 1.7vw, 22px);
+  line-height: 1.25;
+}
+
+.graph-heading p {
+  margin: 0;
+  color: #71809a;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.graph-total {
+  flex: 0 0 auto;
+  color: #6557ef;
+  font-size: 15px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.graph-total-savings { color: #16a879; }
+
+.graph-scroll {
+  width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+
+.finance-graph {
+  display: block;
+  width: 100%;
+  min-width: 360px;
+  height: auto;
+  overflow: visible;
+}
+
+.graph-grid-line {
+  stroke: #e7ebf4;
+  stroke-width: 1;
+  stroke-dasharray: 3 5;
+}
+
+.graph-axis-label {
+  fill: #8792a7;
+  font-size: 10px;
+  font-family: inherit;
+}
+
+.graph-value-label {
+  fill: #39445c;
+  font-size: 10px;
+  font-weight: 700;
+  font-family: inherit;
+}
+
+.graph-category-label {
+  fill: #68758d;
+  font-size: 10px;
+  font-family: inherit;
+}
+
+.expense-graph-bar {
+  fill: url(#expenseBarGradient);
+  fill: #6757ee;
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.expense-graph-bar:hover { opacity: 0.78; }
+
+.savings-graph-line {
+  fill: none;
+  stroke: #20b987;
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.savings-graph-point {
+  fill: #ffffff;
+  stroke: #20b987;
+  stroke-width: 3;
+}
+
+@media (max-width: 900px) {
+  .finance-graphs-grid { grid-template-columns: minmax(0, 1fr); }
+  .finance-graph { min-width: 0; }
+}
+
+@media (max-width: 520px) {
+  .graph-heading { flex-direction: column; }
+  .graph-total { font-size: 14px; }
+  .finance-graph { min-width: 390px; }
+}
+
+
+/* Savings graph readability and selected-goal feedback */
+.graph-scale-note { display: block; margin-top: 5px; color: #8792a7; font-size: 10px; line-height: 1.4; }
+#savings-form { scroll-margin-top: 115px; }
+#savings-form:focus-within { border-color: #b8b0ff; }
+
+
+/* Compact finance forms: balanced sizing without changing form behavior */
+.finance-form-card {
+  padding: 24px;
+  border-radius: 24px;
+}
+.finance-form-header {
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.finance-form-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 15px;
+  font-size: 23px;
+}
+.finance-form-header h2 {
+  font-size: 22px;
+  line-height: 1.25;
+}
+.finance-form-header p {
+  font-size: 13px;
+  line-height: 1.45;
+}
+.finance-form {
+  gap: 13px;
+}
+.form-row {
+  gap: 12px;
+}
+.input-wrapper input,
+.input-wrapper select {
+  min-height: 46px;
+  border-radius: 12px;
+  font-size: 14px;
+}
+.input-group {
+  gap: 6px;
+}
+.input-group label {
+  font-size: 11px;
+}
+.modern-submit {
+  min-height: 49px;
+  margin-top: 5px;
+  border-radius: 12px;
+  font-size: 15px;
+}
+.button-arrow {
+  right: 15px;
+  font-size: 17px;
+}
+.selected-goal-preview {
+  padding: 12px 14px;
+  border-radius: 14px;
+}
+@media (max-width: 600px) {
+  .finance-form-card { padding: 18px; }
+  .finance-form-header h2 { font-size: 20px; }
+  .form-row { grid-template-columns: minmax(0, 1fr); }
+}

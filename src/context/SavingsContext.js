@@ -33,6 +33,19 @@ export const SavingsProvider = ({ children }) => {
     getStoredData("expenseRecords")
   );
 
+  // Goal selected from the Goals page for the Add Savings form.
+  const [activeGoalId, setActiveGoalId] = useState(() =>
+    localStorage.getItem("activeSavingsGoalId") || ""
+  );
+
+  useEffect(() => {
+    if (activeGoalId) {
+      localStorage.setItem("activeSavingsGoalId", activeGoalId);
+    } else {
+      localStorage.removeItem("activeSavingsGoalId");
+    }
+  }, [activeGoalId]);
+
   /* =========================
      PERMANENT STORAGE
   ========================= */
@@ -88,6 +101,7 @@ export const SavingsProvider = ({ children }) => {
     const newSaving = {
       id: createId(),
       goalId: saving.goalId,
+      goalName: String(saving.goalName || goals.find((goal) => String(goal.id) === String(saving.goalId))?.name || ""),
       amount: Number(saving.amount) || 0,
       date:
         saving.date ||
@@ -235,6 +249,8 @@ export const SavingsProvider = ({ children }) => {
     goals,
     savings,
     expenses,
+    activeGoalId,
+    setActiveGoalId,
 
     createGoal,
     addGoal,

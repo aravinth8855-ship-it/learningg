@@ -1,13 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSavings } from "../context/SavingsContext";
 
 const SavingsForm = () => {
   const {
     goals,
     addSaving,
+    activeGoalId,
+    setActiveGoalId,
   } = useSavings();
 
-  const [goalId, setGoalId] = useState("");
+  const [goalId, setGoalId] = useState(activeGoalId || "");
+
+  useEffect(() => {
+    if (activeGoalId && goals.some((goal) => String(goal.id) === String(activeGoalId))) {
+      setGoalId(String(activeGoalId));
+    }
+  }, [activeGoalId, goals]);
   const [amount, setAmount] = useState("");
   const [date, setDate] = useState(
     new Date().toISOString().split("T")[0]
@@ -36,6 +44,7 @@ const SavingsForm = () => {
 
     addSaving({
       goalId,
+      goalName: selectedGoal?.name || "",
       amount: cleanAmount,
       date,
       note: note.trim(),
@@ -43,10 +52,11 @@ const SavingsForm = () => {
 
     setAmount("");
     setNote("");
+    setActiveGoalId("");
   };
 
   return (
-    <div className="finance-form-card savings-form-card">
+    <div id="savings-form" className="finance-form-card savings-form-card">
       <div className="form-card-glow"></div>
 
       <div className="finance-form-header">
@@ -78,9 +88,10 @@ const SavingsForm = () => {
           <div className="input-wrapper">
             <select
               value={goalId}
-              onChange={(e) =>
-                setGoalId(e.target.value)
-              }
+              onChange={(e) => {
+                setGoalId(e.target.value);
+                setActiveGoalId(e.target.value);
+              }}
             >
               <option value="">
                 Select a savings goal

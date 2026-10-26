@@ -8,8 +8,9 @@ import SavingsForm from "../components/SavingsForm";
 import ExpenseHistory from "../components/ExpenseHistory";
 import SavingsHistory from "../components/SavingsHistory";
 import ExpenseChart from "../components/ExpenseChart";
+import SavingsChart from "../components/SavingsChart";
 
-const Dashboard = () => {
+const Dashboard = ({ setPage }) => {
   const {
     goals,
     expenses,
@@ -52,19 +53,6 @@ const Dashboard = () => {
           100
         )
       : 0;
-
-  /* =========================
-     RECENT EXPENSES
-  ========================= */
-
-  const recentExpenses = [...expenses]
-    .sort(
-      (a, b) =>
-        new Date(b.date || 0) -
-        new Date(a.date || 0)
-    )
-    .slice(0, 3);
-
   /* =========================
      SCROLL FUNCTIONS
   ========================= */
@@ -294,6 +282,7 @@ const Dashboard = () => {
               <GoalCard
                 key={goal.id}
                 goal={goal}
+                setPage={setPage}
               />
 
             ))}
@@ -379,105 +368,6 @@ const Dashboard = () => {
         </div>
 
       </section>
-
-      {/* =====================================================
-          RECENT EXPENSES
-      ===================================================== */}
-
-      <section className="dashboard-section">
-
-        <div className="section-heading">
-
-          <div>
-
-            <span>QUICK VIEW</span>
-
-            <h2>
-              Latest expenses
-            </h2>
-
-          </div>
-
-        </div>
-
-        <div className="recent-expenses">
-
-          {recentExpenses.length === 0 ? (
-
-            <div className="premium-empty">
-
-              <div className="empty-icon">
-                ✨
-              </div>
-
-              <h3>
-                No expenses yet
-              </h3>
-
-              <p>
-                Your recent spending will appear
-                here.
-              </p>
-
-            </div>
-
-          ) : (
-
-            recentExpenses.map((expense) => {
-
-              const name =
-                expense.name ||
-                expense.title ||
-                "Expense";
-
-              return (
-
-                <div
-                  className="recent-expense"
-                  key={expense.id}
-                >
-
-                  <div className="recent-expense-icon">
-                    −
-                  </div>
-
-                  <div className="recent-expense-info">
-
-                    <strong>
-                      {name}
-                    </strong>
-
-                    <span>
-                      {expense.category ||
-                        "Other"}{" "}
-                      •{" "}
-                      {expense.date}
-                    </span>
-
-                  </div>
-
-                  <strong className="recent-expense-amount">
-
-                    −₹
-                    {Number(
-                      expense.amount || 0
-                    ).toLocaleString(
-                      "en-IN"
-                    )}
-
-                  </strong>
-
-                </div>
-
-              );
-            })
-
-          )}
-
-        </div>
-
-      </section>
-
       {/* =====================================================
           ANALYTICS
       ===================================================== */}
@@ -503,7 +393,10 @@ const Dashboard = () => {
 
         </div>
 
-        <ExpenseChart />
+        <div className="finance-graphs-grid">
+          <ExpenseChart />
+          <SavingsChart />
+        </div>
 
       </section>
 
